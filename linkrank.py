@@ -3,7 +3,7 @@ import requests
 import threading
 from collections import Counter, defaultdict
 import math
-# import json
+import json
 import operator
 import urllib
 
@@ -12,7 +12,7 @@ def get_idfs(dicts):
     for city_dict in dicts.values():
         for link in city_dict.keys():
             idfs[link] += 1
-    
+
     num_docs = float(len(dicts.keys()))
     for link, term_count in idfs.items():
         idfs[link] = math.log(num_docs/term_count)
@@ -88,7 +88,7 @@ def main():
     for t in threads:
         t[0].join()
         cities_dict[t[1]] = t[2][0]
-    
+
     corpus = get_idfs(cities_dict)
 
     our_cities = ["London","New_York_City", "Chicago", "Paris", "Tokyo"]
@@ -98,7 +98,7 @@ def main():
         for k,v in out_dict[c].items():
             out_dict[c][k] = out_dict[c][k]*corpus[k]
 
-    # print json.dumps(out_dict, ensure_ascii=False)
+    print json.dumps(out_dict, ensure_ascii=False)
 
     bin_breaks = {'Chicago':        [0.004015172595221041, 0.0020075862976105204, 0.0014292407151658435, 0.0008027006705568285,-1],\
                   'London':         [0.003379342946188495, 0.0016896714730942476, 0.001006416505027073, 0.0005324253825028401,-1],\
