@@ -27,16 +27,16 @@ template_str = """
     transform: translateY(-50%);
 }
 
-p { 
-    font-family: sans-serif; 
-    text-align: center; 
-    display:inline-block; 
-    margin-top:7px;margin-bottom:7px; 
+p {
+    font-family: sans-serif;
+    text-align: center;
+    display:inline-block;
+    margin-top:7px;margin-bottom:7px;
     font-size:80px
 }
 
 a {
-    color: white; 
+    color: white;
     padding: 2px;
 }
 </style>
@@ -53,7 +53,7 @@ a {
 """
 
 with open("link_data.json") as json_file:
-    linkranks = json.load(json_file)
+    from links import linkranks
     lengths = {'Chicago':'41502',
               'London':'41070',
               'New_York_City':'47284',
@@ -73,7 +73,7 @@ with open("link_data.json") as json_file:
             links_w_colors.append((colors[color_val], unquoted.decode('utf-8')))
 
         t = Template(template_str)
-        html = t.render(links=links_w_colors, height=lenghts[city])
+        html = t.render(links=links_w_colors, height=lengths[city])
         html = html.encode('utf-8')
         f = open(city + '.html','w')
         f.write(html)
