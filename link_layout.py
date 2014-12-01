@@ -14,11 +14,7 @@ template_str = """
 <!DOCTYPE html>
 <html>
 <style>
-.container {
-    height:{{height}};
-    width:9000px;
-}
-
+/*
 .terms {
     width: 50%;
     margin: 0 auto;
@@ -26,6 +22,7 @@ template_str = """
     top: 50%;
     transform: translateY(-50%);
 }
+*/
 
 p {
     font-family: sans-serif;
@@ -40,14 +37,10 @@ a {
     padding: 2px;
 }
 </style>
-<body style="text-align: justify;">
-    <div class="container">
-        <div class="terms">
-            {% for link in links %}
-                <p class="term"><a style="background: {{link[0]}};">{{link[1]}}</a></p>
-            {% endfor %}
-        </div>
-    </div>
+<body style="text-align: justify; width: 9000px; height: {{height}}px;">
+    {% for link in links %}
+        <p class="term"><a style="background: {{link[0]}};">{{link[1]}}</a></p>
+    {% endfor %}
 </body>
 </html>
 """
@@ -73,7 +66,7 @@ with open("link_data.json") as json_file:
             links_w_colors.append((colors[color_val], unquoted.decode('utf-8')))
 
         t = Template(template_str)
-        html = t.render(links=links_w_colors, height=lengths[city])
+        html = t.render(links=links_w_colors, height=int(lengths[city]) / 2)
         html = html.encode('utf-8')
         f = open(city + '.html','w')
         f.write(html)
